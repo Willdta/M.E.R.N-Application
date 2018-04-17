@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const { isURL, isEmpty } = require('validator')
 
 const ProfileSchema = new Schema({
-  user = {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
@@ -10,7 +11,8 @@ const ProfileSchema = new Schema({
   handle: {
     type: String,
     required: true,
-    maxlength: 40
+    maxlength: 40,
+    minlength: 2
   },
 
   company: {
@@ -39,7 +41,7 @@ const ProfileSchema = new Schema({
     type: String
   },
 
-  githubName: {
+  githubUser: {
     type: String
   },
   
@@ -117,7 +119,7 @@ const ProfileSchema = new Schema({
 
   social: {
     youtube: {
-      type: String
+      type: String,
     },
 
     twitter: {
