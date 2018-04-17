@@ -32,6 +32,50 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
     .catch(err => res.status(404).json(err))
 })
 
+// Get specific user's profile by handle
+router.get('/handle/:handle', (req, res) => {
+  const errors = {}
+  
+  Profile
+    .findOne({ handle: req.params.handle })
+    .populate('user', ['name', 'avatar'])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = 'No Such profile exists'
+        res.status(404).json(errors)
+      }
+      
+      res.json(profile)
+    })
+    .catch(err => res.status(404).json(err))
+})
+
+// Get specific user's profile by id
+router.get('/user/:user_id', (req, res) => {
+  const errors = {}
+  
+  Profile
+    .findOne({ user: req.params.user_id })
+    .populate('user', ['name', 'avatar'])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = 'No Such profile exists'
+        res.status(404).json(errors)
+      }
+      
+      res.json(profile)
+    })
+    .catch(err => res.status(404).json({ err: 'No such profile exits' }))
+})
+
+router.get('/all', (req, res) => {
+  Profile
+    .find()
+    .populate('user', ['name', 'avatar'])
+    .then(profiles => res.json(profiles))
+    .catch(err => res.json({ err: 'something happened' }))
+})
+
 // Create / Edit user profile
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { errors, isValid } = validateProfile(req.body)
