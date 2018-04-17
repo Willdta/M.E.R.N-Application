@@ -1,4 +1,5 @@
 const express = require('express')
+const router = express.Router()
 const mongoose = require('mongoose')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
@@ -6,24 +7,25 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const keys = require('../../config/keys')
 
-const router = express.Router()
+const validateRegistration = require('../../validation/register')
 
 const User = require('../../models/User')
 
-// @route GET /api/users/test
-// @desc tests users route
-// @access Public
-
-router.get('/test', (req, res) => res.json({ message: 'Users Works' }))
-
 // User Registration Route
 router.post('/register', (req, res) => {
+  // const { errors, isValid } = validateRegistration(req.body)
+
+  // if (!isValid) {
+  //   return res.status(400).json({errors})
+  // }
+
   User
   .findOne({ email: req.body.email })
   .then(user => {
     
     if (user) {
-      res.status(400).json({ email: 'email exists' })
+      // errors.email = 'Email already exits' 
+      return res.status(400).json({ error: 'nah'})
     } else {
       const avatar = gravatar.url(req.body.email, {
         s: '100',
@@ -58,7 +60,6 @@ router.post('/register', (req, res) => {
 })
 
 // Login Route with token
-
 router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
