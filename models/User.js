@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const { isEmail } = require('validator')
 
 // Create Schema
-const userSchema = new Schema({
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -36,4 +36,4 @@ const userSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', UserSchema)
