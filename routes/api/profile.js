@@ -5,6 +5,8 @@ const passport = require('passport')
 
 // Load validation
 const validateProfile = require('../../validation/profile')
+const validateExperience = require('../../validation/experience')
+const validateEducation = require('../../validation/education')
 
 const User = require('../../models/User')
 const Profile = require('../../models/Profile')
@@ -134,6 +136,64 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
           })
       }
     })
+})
+
+// Add experience to profile
+router.post('/experience', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateExperience(req.body)
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  
+  Profile
+  .findOne({ user: req.user.id })
+  .then(profile => {
+    const newExperience = {
+      title: req.body.title,
+      company: req.body.company,
+      location: req.body.location,
+      from: req.body.from,
+      to: req.body.to,
+      from: req.body.from,
+      description: req.body.description,
+    }
+
+    profile.experience.unshift(newExperience)
+    
+    profile
+    .save()
+    .then(profile => res.json(profile))
+  })
+})
+
+// Add education to profile
+router.post('/education', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateEducation(req.body)
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  
+  Profile
+  .findOne({ user: req.user.id })
+  .then(profile => {
+    const newEducation = {
+      school: req.body.school,
+      degree: req.body.degree,
+      fieldofstudy: req.body.fieldofstudy,
+      from: req.body.from,
+      to: req.body.to,
+      from: req.body.from,
+      current: req.body.current,
+      description: req.body.description,
+    }
+
+    profile.education.unshift(newEducation)
+    profile
+    .save()
+    .then(profile => res.json(profile))
+  })
 })
 
 module.exports = router

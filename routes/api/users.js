@@ -9,6 +9,7 @@ const keys = require('../../config/keys')
 
 // Validation for registration
 const validateRegistration = require('../../validation/register')
+const validateLogin = require('../../validation/login')
 
 const User = require('../../models/User')
 
@@ -62,6 +63,12 @@ router.post('/register', (req, res) => {
 
 // Login Route with token
 router.post('/login', (req, res) => {
+  const { errors, isValid } = validateLogin(req.body)
+
+  if (!isValid) {
+    return res.status(400).json({ errors })
+  }
+
   const email = req.body.email
   const password = req.body.password
 
@@ -86,7 +93,7 @@ router.post('/login', (req, res) => {
             jwt.sign(payload, keys.secretOrKey, { expiresIn: 100000 }, (err, token) => {
               res.json({ 
                 success: true,
-                token: `${token}`
+                token: `Bearer ${token}`
               })
               console.log(token)
             })
@@ -96,11 +103,6 @@ router.post('/login', (req, res) => {
           }
         })
     })
-})
-
-// Current User
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ msg: 'success' })
 })
 
 module.exports = router
