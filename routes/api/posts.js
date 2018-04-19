@@ -101,14 +101,14 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
           if (likeCheck) {
             return res.json({ message: 'You haven\'t liked this post yet' })
           }
-            const removeIndex = post.likes
-              .map(item => item.user.toString())
-              .indexOf(req.user.id)
 
-            post.likes.splice(removeIndex, 1)
-            post.save().then(post => res.json(post))
-        })
-        .catch(err => res.json({ err }))    
+          if (!req.user.id) {
+            console.log('nahhhh ')
+          }
+
+          post.likes.splice(req.user.id, 1)
+          post.save().then(post => res.json(post))
+        })  
     })
     .catch(err => res.json(err))
 })
@@ -139,17 +139,11 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session
   Profile
     .findOne({ user: req.user.id })
     .then(() => {
-      Post.findById(req.params.id)
-        .then(post => {
-          if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
-            return res.json({ message: 'Comment does not exist' })
-          }
-          
-          const index = post.comments.map(item => item._id.toString()).indexOf(req.params.comment_id)
-          post.comments.splice(index, 1)
-          post.save().then(comment => res.json(comment))
-        })
-        .catch(err => res.json(err))        
+      Post.findOne({ _id: req.params.id})
+        .then(comment => {
+          comment.comments.remove({ _id: req.params.comment_id })
+          comment.save().then(comment => res.json(comment))
+        })    
     })
     .catch(err => res.json(err))
 })
