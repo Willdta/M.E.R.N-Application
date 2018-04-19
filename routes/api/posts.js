@@ -74,6 +74,8 @@ router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), 
       Post
         .findById(req.params.post_id)
         .then(post => {
+
+          // Check if user already liked a post
           const likeCheck = post.likes.filter(like => like.user.toString() === req.user.id).length > 0
           
           if (likeCheck) {
@@ -96,6 +98,8 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
       Post
         .findById(req.params.post_id)
         .then(post => {
+
+          // Check if logged in user hasn't already liked the post
           const likeCheck = post.likes.filter(like => like.user.toString() === req.user.id).length === 0
           
           if (likeCheck) {
@@ -137,12 +141,23 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
 // Delete comment
 router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile
+  // Find a user
     .findOne({ user: req.user.id })
     .then(() => {
-      Post.findOne({ _id: req.params.id})
-        .then(comment => {
-          comment.comments.remove({ _id: req.params.comment_id })
-          comment.save().then(comment => res.json(comment))
+      // Find the post with that id
+      Post
+       .findOne({_id: req.params.id })
+        .then(post => {
+          const currentUser = post.comments.filter(comment => comment.id === req.params.comment_id)
+          
+          if (currentUser[0].user.toString() === req.user.id) {
+            post.comments.remove({ _id: req.params.comment_id })
+            post.save()  
+            .then(() => res.json({ msg: 'success' }))
+          } else {
+            res.json({ message: 'You cannot delete someone elses comment' })
+          }
+          
         })    
     })
     .catch(err => res.json(err))
