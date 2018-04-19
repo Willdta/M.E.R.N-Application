@@ -114,16 +114,16 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
       if (profile) {
         Profile
           .findOneAndUpdate(
-            { user: req.user.id},
+            { user: req.user.id },
             { $set: profileFields },
-            { new: true}
+            { new: true }
           )
           .then(profile => res.json(profile))
       } else {
     
         // Find profile by handle
         Profile
-          .findOne({ handle: profileFields.handle})
+          .findOne({ handle: profileFields.handle })
           .then(profile => {
             if (profile) {
               res.status(400).json({ message: 'This handle is taken' })
@@ -201,6 +201,11 @@ router.get('/experience', (req, res) => {
   .then(result => res.json(result))
 })
 
+router.get('/education', (req, res) => {
+  Profile.find()
+  .then(result => res.json(result))
+})
+
 // Delete Experience
 router.delete('/experience/:experience_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile
@@ -220,10 +225,8 @@ router.delete('/education/:education_id', passport.authenticate('jwt', { session
     .findOne({ user: req.user.id })
     .then(result => {
       result.education.remove({ _id: req.params.education_id })
-      result
-        .save()
-        .then(result => res.json(result.education))
-        .catch(err => res.json(err))
+      result.save()
+        .then(response => res.json(response))
     })
     .catch(err => res.json(err))
 })
