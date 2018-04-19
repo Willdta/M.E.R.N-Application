@@ -70,7 +70,7 @@ router.delete('/:post_id', passport.authenticate('jwt', { session: false }), (re
 router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile
     .findOne({ user: req.user.id })
-    .then(profile => {
+    .then(() => {
       Post
         .findById(req.params.post_id)
         .then(post => {
@@ -92,7 +92,7 @@ router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), 
 router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile
     .findOne({ user: req.user.id })
-    .then(profile => {
+    .then(() => {
       Post
         .findById(req.params.post_id)
         .then(post => {
@@ -109,6 +109,47 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
             post.save().then(post => res.json(post))
         })
         .catch(err => res.json({ err }))    
+    })
+    .catch(err => res.json(err))
+})
+
+// Add comment
+router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Profile
+    .findOne({ user: req.user.id })
+    .then(() => {
+      Post.findById(req.params.id)
+        .then(post => {
+          const newComment = {
+            user: req.user.id,
+            name: req.body.name,
+            text: req.body.text,
+            avatar: req.body.avatar
+          }
+
+          post.comments.unshift(newComment)
+          post.save().then(comment => res.json(comment))
+        })
+    })
+    .catch(err => res.json(err))
+})
+
+// Delete comment
+router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Profile
+    .findOne({ user: req.user.id })
+    .then(() => {
+      Post.findById(req.params.id)
+        .then(post => {
+          if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
+            return res.json({ message: 'Comment does not exist' })
+          }
+          
+          const index = post.comments.map(item => item._id.toString()).indexOf(req.params.comment_id)
+          post.comments.splice(index, 1)
+          post.save().then(comment => res.json(comment))
+        })
+        .catch(err => res.json(err))        
     })
     .catch(err => res.json(err))
 })
