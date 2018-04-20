@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
+import { registerUser } from "../actions/index";
 
-export default class Register extends Component {
+class Register extends Component {
   constructor(props) {
     super(props)
     
@@ -31,18 +34,11 @@ export default class Register extends Component {
       password2: this.state.password2,
     }
 
-    axios
-      .post('/api/users/register', newUser)
-      .then(user => console.log(user))
-      .catch(err => {
-        this.setState({
-          errors: err.response.data.errors
-        })
-      })
+    this.props.registerUser(newUser, this.props.history)
   }
 
   render() {
-    const { errors } = this.state
+    const { errors } = this.props
 
     return (
       <div>
@@ -51,13 +47,13 @@ export default class Register extends Component {
 
         <div>
           <form action="" onSubmit={this.handleSubmit}>
-            { this.state.errors ? <h5>{errors.name}</h5> : '' }
+            { errors ? <h5>{errors.name}</h5> : '' }
             <input type="text" placeholder="name" name="name" value={this.state.name} onChange={this.handleChange} />
-            { this.state.errors ? <h5>{errors.email}</h5> : null }            
+            { errors ? <h5>{errors.email}</h5> : null }            
             <input type="text" placeholder="email" name="email" value={this.state.email} onChange={this.handleChange} />
-            { this.state.errors ? <h5>{errors.password}</h5> : null }                        
+            { errors ? <h5>{errors.password}</h5> : null }                        
             <input type="text" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange} />
-            { this.state.errors ? <h5>{errors.password2}</h5> : null }                        
+            { errors ? <h5>{errors.password2}</h5> : null }                        
             <input type="text" placeholder="confirm password" name="password2" value={this.state.password2} onChange={this.handleChange} />
             <button type="submit">Submit</button>
           </form>
@@ -66,3 +62,9 @@ export default class Register extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ auth, errors }) => {
+  return { auth, errors }
+}
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Register))
