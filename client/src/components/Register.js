@@ -42,7 +42,6 @@ export default class Register extends Component {
   }
 
   render() {
-
     const { errors } = this.state
 
     return (
@@ -56,9 +55,9 @@ export default class Register extends Component {
             <input type="text" placeholder="name" name="name" value={this.state.name} onChange={this.handleChange} />
             { this.state.errors ? <h5>{errors.email}</h5> : null }            
             <input type="text" placeholder="email" name="email" value={this.state.email} onChange={this.handleChange} />
-            {this.state.errors ? <h5>{errors.password}</h5> : null}                        
+            { this.state.errors ? <h5>{errors.password}</h5> : null }                        
             <input type="text" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange} />
-            {this.state.errors ? <h5>{errors.password2}</h5> : null}                        
+            { this.state.errors ? <h5>{errors.password2}</h5> : null }                        
             <input type="text" placeholder="confirm password" name="password2" value={this.state.password2} onChange={this.handleChange} />
             <button type="submit">Submit</button>
           </form>
