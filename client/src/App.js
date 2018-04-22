@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
+import setAuthToken from './utils/setAuthToken'
+import { setCurrentUser } from './actions/index'
 import { Provider } from 'react-redux'
 import store from './store'
 
@@ -8,6 +11,19 @@ import Login from './components/Login'
 import Register from './components/Register'
 
 import './App.css'
+
+// Saves token for user in case of page refresh
+if (localStorage.jwtToken) {
+
+  // Set auth token header auth
+  setAuthToken(localStorage.jwtToken)
+
+  // Decode token to get user info
+  const decoded = jwt_decode(localStorage.jwtToken)
+
+  // Set user and isAuth to true
+  store.dispatch(setCurrentUser(decoded))
+}
 
 class App extends Component {
   render() {
@@ -21,7 +37,6 @@ class App extends Component {
           </div>
         </Router>
       </Provider>
-      
     )
   }
 }

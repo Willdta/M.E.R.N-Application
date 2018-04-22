@@ -9,25 +9,19 @@ const Profile = require('../../models/Profile')
 // Validation
 const validatePost = require('../../validation/post')
 
-// @route GET /api/posts/test
-// @desc tests posts route
-// @access Public
-
-router.get('/test', (req, res) => res.json({ message: 'Posts Works' }))
-
 // Get all posts
 router.get('/', (req, res) => {
   Post.find()
     .sort({ date: -1 })
     .then(posts => res.json(posts))
     .catch(err => res.json(err))
-  })
+})
 
-  router.get('/:post_id', (req, res) => {
-    Post.findById(req.params.post_id)
-      .then(post => res.json(post))
-      .catch(err => res.json({ error: 'No such post found' }))
-  })
+router.get('/:post_id', (req, res) => {
+  Post.findById(req.params.post_id)
+    .then(post => res.json(post))
+    .catch(err => res.json({ error: 'No such post found' }))
+})
 
 // Create new post
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -141,15 +135,18 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
 // Delete comment
 router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile
-  // Find a user
+    
+    // Find a user
     .findOne({ user: req.user.id })
     .then(() => {
+      
       // Find the post with that id
       Post
        .findOne({_id: req.params.id })
         .then(post => {
           const currentUser = post.comments.filter(comment => comment.id === req.params.comment_id)
           
+          // User can only delete their own comments
           if (currentUser[0].user.toString() === req.user.id) {
             post.comments.remove({ _id: req.params.comment_id })
             post.save()  
@@ -157,7 +154,6 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session
           } else {
             res.json({ message: 'You cannot delete someone elses comment' })
           }
-          
         })    
     })
     .catch(err => res.json(err))

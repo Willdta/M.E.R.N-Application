@@ -11,12 +11,6 @@ const validateEducation = require('../../validation/education')
 const User = require('../../models/User')
 const Profile = require('../../models/Profile')
 
-// @route GET /api/profile/test
-// @desc tests profile route
-// @access Public
-
-router.get('/test', (req, res) => res.json({ message: 'Profile Works' }))
-
 // Get current user profile
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   const errors = {}
