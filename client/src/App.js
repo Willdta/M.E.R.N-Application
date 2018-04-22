@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import setAuthToken from './utils/setAuthToken'
 import { setCurrentUser, logoutUser } from './actions/index'
+import { clearCurrentProfile } from './actions/profileActions'
 import { Provider } from 'react-redux'
 import store from './store'
 
@@ -13,7 +14,6 @@ import Dashboard from './components/Dashboard'
 import Navbar from './components/Navbar'
 
 import './App.css'
-
 
 // Saves token for user in case of page refresh
 if (localStorage.jwtToken) {
@@ -27,13 +27,16 @@ if (localStorage.jwtToken) {
   // Set user and isAuth to true
   store.dispatch(setCurrentUser(decoded))
   
-  // Delete token and logout user on expiration
   const currentTime = Date.now() / 1000
-
+  
+  // Delete token and logout user on expiration
   if (decoded.exp < currentTime) {
 
     // Logout user
     store.dispatch(logoutUser())
+
+    // Clear profile
+    store.dispatch(clearCurrentProfile())
 
     // Redirect to login
     window.location.href = '/login'
