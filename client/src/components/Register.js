@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import axios from 'axios'
 import { registerUser } from "../actions/index";
 
 class Register extends Component {
@@ -18,6 +17,12 @@ class Register extends Component {
     }
   }
 
+  componentDidMount = () => {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard')
+    }
+  }
+  
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value

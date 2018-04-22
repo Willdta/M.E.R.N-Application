@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { loginUser } from '../actions/index'
 import { connect } from 'react-redux'
-import Dashboard from './Dashboard'
 
 class Login extends Component {
   constructor(props) {
@@ -31,14 +30,20 @@ class Login extends Component {
     this.props.loginUser(user)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidMount = () => {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard')
+    }
+  }
+  
+  componentWillReceiveProps = nextProps => {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/dashboard')
     }
   } 
 
   render() {
-    const { auth, errors } = this.props
+    const { errors } = this.props
 
     return (
       <div>
