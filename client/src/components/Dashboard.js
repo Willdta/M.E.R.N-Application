@@ -15,15 +15,20 @@ class Dashboard extends Component {
     let dashboardContent
 
     if (profile === null || loading === true) {
+    
       dashboardContent = <h4>Loading...</h4>
+    
     } else if (Object.keys(profile).length > 0) {
+      
       dashboardContent = (
         <div>
           <h1>Welcome { user.name }</h1>
           <img src={ user.avatar } alt="" />
         </div>
       )
+    
     } else {
+      
       dashboardContent = (
         <div>
           <h5>You haven't created a profile yet</h5>
