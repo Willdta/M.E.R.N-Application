@@ -228,7 +228,7 @@ router.delete('/education/:education_id', passport.authenticate('jwt', { session
 // Delete Profile
 router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   Profile
-    .findOneAndRemove({ user: req.user.id})
+    .findOneAndRemove({ user: req.user.id })
     .then(() => {
       User
         .findOneAndRemove({ _id: req.user.id })

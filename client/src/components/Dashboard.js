@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCurrentProfile } from '../actions/profileActions'
+import { getCurrentProfile, deleteProfile } from '../actions/profileActions'
 import ProfileActions from './ProfileActions'
 
 class Dashboard extends Component { 
   componentDidMount = () => {
     this.props.getCurrentProfile()
+  }
+
+  deleteAccount = () => {
+    this.props.deleteProfile()
   }
 
   render() {
@@ -25,6 +29,7 @@ class Dashboard extends Component {
         <div>
           <p>Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link></p>
           <ProfileActions />
+          <button onClick={this.deleteAccount}>Delete account</button>
         </div>
       )
     
@@ -34,6 +39,7 @@ class Dashboard extends Component {
         <div>
           <h5>You haven't created a profile yet</h5>
           <Link to="/create-profile">Create profile</Link>
+          <button onClick={this.deleteAccount}>Delete account</button>          
         </div>
       )
     }
@@ -50,4 +56,4 @@ const mapStateToProps = ({ auth, profile }) => {
   return { auth, profile }
 }
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard)
+export default connect(mapStateToProps, { getCurrentProfile, deleteProfile })(Dashboard)
