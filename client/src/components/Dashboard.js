@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCurrentProfile } from '../actions/profileActions'
+import ProfileActions from './ProfileActions'
 
 class Dashboard extends Component { 
   componentDidMount = () => {
@@ -22,13 +23,8 @@ class Dashboard extends Component {
       
       dashboardContent = (
         <div>
-          <h1>Your Profile</h1>
-          <h5>{profile.handle}</h5>
-          <h5>{profile.status}</h5>
-          <h5>{profile.website}</h5>
-          <h5>{profile.location}</h5>
-          <h5>{profile.skills}</h5>
-          <Link to={profile.social.instagram}>Instagram</Link>
+          <p>Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link></p>
+          <ProfileActions />
         </div>
       )
     
