@@ -12,12 +12,12 @@ class Navbar extends Component {
   }
 
   render() {
-    const { user, isAuthenticated } = this.props.auth    
+    const { isAuthenticated } = this.props.auth    
 
     const authenticated = (
       <div>
         <a 
-          href="#" 
+          href="/" 
           onClick={this.logout}>
           Logout
         </a>
