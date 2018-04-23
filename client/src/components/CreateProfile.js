@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import { withRouter } from 'react-router-dom'
 import formOptions from '../common/formOptions'
-// import { connect } from 'react-redux'
-// import { createProfile } from '../actions/profileActions'
+import { connect } from 'react-redux'
+import { createProfile } from '../actions/profileActions'
 
-export default class CreateProfile extends Component {
+class CreateProfile extends Component {
   constructor(props) {
     super(props)
     
@@ -23,6 +24,12 @@ export default class CreateProfile extends Component {
       youtube: '',
       instagram: '',
       errors: {}
+    }
+  }
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors })
     }
   }
 
@@ -58,13 +65,16 @@ export default class CreateProfile extends Component {
       instagram: this.state.instagram
     }
     
-    // this.props.createProfile(newProfile)
+    this.props.createProfile(newProfile, this.props.history)
   }
   
   render() {
+    const { errors }  = this.props
+
     return (
       <div>
         <form style={{display: 'block'}} onSubmit={this.submitProfile}>
+          { errors ? <h5>{errors.handle}</h5> : '' }
           <input 
             placeholder="Handle"
             type="text" 
@@ -73,6 +83,7 @@ export default class CreateProfile extends Component {
             name="handle"
           />
 
+          { errors ? <h5>{errors.status}</h5> : '' }          
           <select name="status" onChange={this.handleChange} value={this.state.status}>
             {this.renderOptions()}
           </select>
@@ -84,6 +95,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="company"
           />
+
+          { errors ? <h5>{errors.website}</h5> : '' }          
           <input
             placeholder="Website"
             type="text"
@@ -98,6 +111,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="location"
           />
+
+          { errors ? <h5>{errors.skills}</h5> : '' }          
           <input 
             name="skills" 
             id="" 
@@ -121,6 +136,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="bio"
           />
+
+          { errors ? <h5>{errors.youtube}</h5> : '' }          
           <input
             placeholder="YouTube"
             type="text"
@@ -128,6 +145,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="youtube"
           />
+
+          { errors ? <h5>{errors.linkedin}</h5> : '' }
           <input
             placeholder="LinkedIn"
             type="text"
@@ -135,6 +154,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="linkedin"
           />
+
+          { errors ? <h5>{errors.twitter}</h5> : '' }    
           <input
             placeholder="Twitter"
             type="text"
@@ -142,6 +163,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="twitter"
           />
+          
+          { errors ? <h5>{errors.facebook}</h5> : '' }
           <input
             placeholder="Facebook"
             type="text"
@@ -149,6 +172,8 @@ export default class CreateProfile extends Component {
             onChange={this.handleChange}
             name="facebook"
           />
+
+          { errors ? <h5>{errors.instagram}</h5> : '' }
           <input
             placeholder="Instagram"
             type="text"
@@ -164,8 +189,8 @@ export default class CreateProfile extends Component {
   }
 }
 
-// const mapStateToProps = ({ auth, profile, errors }) => {
-//   return { auth, profile, errors }
-// }
+const mapStateToProps = ({ profile, errors }) => {
+  return { profile, errors }
+}
 
-// export default connect(mapStateToProps, { createProfile })(CreateProfile)
+export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile))

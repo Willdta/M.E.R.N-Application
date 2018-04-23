@@ -22,8 +22,13 @@ class Dashboard extends Component {
       
       dashboardContent = (
         <div>
-          <h1>Welcome { user.name }</h1>
-          <img src={ user.avatar } alt="" />
+          <h1>Your Profile</h1>
+          <h5>{profile.handle}</h5>
+          <h5>{profile.status}</h5>
+          <h5>{profile.website}</h5>
+          <h5>{profile.location}</h5>
+          <h5>{profile.skills}</h5>
+          <Link to={profile.social.instagram}>Instagram</Link>
         </div>
       )
     
