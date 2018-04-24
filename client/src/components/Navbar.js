@@ -21,6 +21,7 @@ class Navbar extends Component {
           onClick={this.logout}>
           Logout
         </a>
+        <Link to="/profiles">Developers</Link>
       </div>
     )
 
@@ -32,6 +33,7 @@ class Navbar extends Component {
         <Link to="/login">
           Log in
         </Link>
+        <Link to="/profiles">Developers</Link>        
       </div>
     ) 
 
