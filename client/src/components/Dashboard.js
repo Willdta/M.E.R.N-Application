@@ -32,8 +32,8 @@ class Dashboard extends Component {
           <p>Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link></p>
           <ProfileActions />
           <ShowEducation profile={profile}/>
-          <ShowExperience profile={profile}/>
-          <button onClick={this.deleteAccount}>Delete account</button>
+          <ShowExperience profile={profile} />
+          <button style={{marginTop: '100px'}} onClick={this.deleteAccount}>Delete account</button>
         </div>
       )
     

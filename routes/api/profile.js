@@ -141,23 +141,23 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
   }
   
   Profile
-  .findOne({ user: req.user.id })
-  .then(profile => {
-    const newExperience = {
-      title: req.body.title,
-      company: req.body.company,
-      location: req.body.location,
-      from: req.body.from,
-      to: req.body.to,
-      from: req.body.from,
-      description: req.body.description,
-    }
+    .findOne({ user: req.user.id })
+    .then(profile => {
+      const newExperience = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        from: req.body.from,
+        description: req.body.description,
+      }
 
     profile.experience.unshift(newExperience)
     
     profile
-    .save()
-    .then(profile => res.json(profile))
+      .save()
+      .then(profile => res.json(profile))
   })
 })
 
@@ -206,7 +206,7 @@ router.delete('/experience/:experience_id', passport.authenticate('jwt', { sessi
   .then(result => {
     result.experience.remove({ _id: req.params.experience_id })
     result.save()
-      .then(result => res.json(result.experience))
+      .then(result => res.json(result))
       .catch(err => res.json(err))
   })
   .catch(err => res.json(err))
