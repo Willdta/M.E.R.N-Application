@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getProfileByHandle } from '../actions/profileActions'
+import ProfileHeader from './ProfileHeader'
 
 class Profile extends Component {
   componentDidMount = () => {
@@ -13,9 +14,24 @@ class Profile extends Component {
   }
   
   render() {
+    const { profile, loading } = this.props.profile
+
+    let profileContent
+
+    if (profile === null || loading) {
+      profileContent = <h1>Loading...</h1>
+    } else {
+      profileContent = (
+        <div>
+          <Link to="/profiles">Back to profiles</Link>
+          <ProfileHeader profile={profile} />
+        </div>
+      )
+    }
+
     return (
       <div>
-        
+        { profileContent }
       </div>
     )
   }
