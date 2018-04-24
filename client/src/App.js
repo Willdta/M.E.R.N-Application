@@ -19,6 +19,7 @@ import EditProfile from './components/EditProfile'
 import AddEducation from './components/AddEducation'
 import AddExperience from './components/AddExperience'
 import Profiles from './components/Profiles'
+import Profile from './components/Profile'
 
 import './App.css'
 
@@ -76,6 +77,7 @@ class App extends Component {
               <PrivateRoute path="/add-experience" component={ AddExperience } />
             </Switch>
             <Route path="/profiles" component={ Profiles } />
+            <Route path="/profile/:handle" component={ Profile } />
           </div>
         </Router>
       </Provider>

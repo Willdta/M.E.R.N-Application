@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getProfiles } from '../actions/profileActions' 
+import ProfilesContent from './ProfilesContent'
 
 class Profiles extends Component {
   componentDidMount = () => {
@@ -18,6 +19,7 @@ class Profiles extends Component {
       renderProfiles = (
         <div>
           <h1>Profiles</h1>
+          <ProfilesContent profiles={profiles} />
         </div>
       )
     } else {
