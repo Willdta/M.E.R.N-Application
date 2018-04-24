@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getProfileByHandle } from '../actions/profileActions'
 import ProfileHeader from './ProfileHeader'
+import ProfileAbout from './ProfileAbout'
+import ProfileCredentials from './ProfileCredentials'
 
 class Profile extends Component {
   componentDidMount = () => {
@@ -25,6 +27,8 @@ class Profile extends Component {
         <div>
           <Link to="/profiles">Back to profiles</Link>
           <ProfileHeader profile={profile} />
+          <ProfileAbout profile={profile} />
+          <ProfileCredentials profile={profile} />
         </div>
       )
     }
