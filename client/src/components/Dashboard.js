@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getCurrentProfile, deleteProfile } from '../actions/profileActions'
 import ProfileActions from './ProfileActions'
+import ShowEducation from './ShowEducation'
 
 class Dashboard extends Component { 
   componentDidMount = () => {
@@ -29,6 +30,7 @@ class Dashboard extends Component {
         <div>
           <p>Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link></p>
           <ProfileActions />
+          <ShowEducation profile={profile}/>
           <button onClick={this.deleteAccount}>Delete account</button>
         </div>
       )
