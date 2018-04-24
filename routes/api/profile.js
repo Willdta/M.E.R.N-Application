@@ -178,7 +178,6 @@ router.post('/education', passport.authenticate('jwt', { session: false }), (req
       fieldofstudy: req.body.fieldofstudy,
       from: req.body.from,
       to: req.body.to,
-      from: req.body.from,
       current: req.body.current,
       description: req.body.description,
     }

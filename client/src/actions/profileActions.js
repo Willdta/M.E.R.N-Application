@@ -65,3 +65,15 @@ export const clearCurrentProfile = () => {
     type: CLEAR_CURRENT_PROFILE
   }
 }
+
+// Add education
+export const addEducation = (userData, history) => dispatch => {
+  axios.post('/api/profile/education', userData)
+    .then(() => history.push('/dashboard'))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    })
+}

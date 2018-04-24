@@ -16,6 +16,7 @@ import Dashboard from './components/Dashboard'
 import Navbar from './components/Navbar'
 import CreateProfile from './components/CreateProfile'
 import EditProfile from './components/EditProfile'
+import AddEducation from './components/AddEducation'
 
 import './App.css'
 
@@ -65,6 +66,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute path="/edit-profile" component={ EditProfile } />
+            </Switch>
+            <Switch>
+              <PrivateRoute path="/add-education" component={ AddEducation } />
             </Switch>
           </div>
         </Router>
