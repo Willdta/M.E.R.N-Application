@@ -5,6 +5,7 @@ import { getProfileByHandle } from '../actions/profileActions'
 import ProfileHeader from './ProfileHeader'
 import ProfileAbout from './ProfileAbout'
 import ProfileCredentials from './ProfileCredentials'
+import ProfileGithub from './ProfileGithub'
 
 class Profile extends Component {
   componentDidMount = () => {
@@ -29,6 +30,8 @@ class Profile extends Component {
           <ProfileHeader profile={profile} />
           <ProfileAbout profile={profile} />
           <ProfileCredentials profile={profile} />
+          {/* <ProfileGithub username={profile.githubusername} /> */}
+          {profile.githubusername ? <ProfileGithub username={profile.githubusername} /> : null}
         </div>
       )
     }
