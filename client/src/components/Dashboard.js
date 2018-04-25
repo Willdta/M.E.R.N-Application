@@ -21,7 +21,7 @@ class Dashboard extends Component {
 
     let dashboardContent
 
-    if (profile === null || loading === true) {
+    if (profile === null || loading) {
     
       dashboardContent = <h4>Loading...</h4>
     
@@ -29,11 +29,19 @@ class Dashboard extends Component {
       
       dashboardContent = (
         <div>
-          <p>Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link></p>
+          <p className="lead text-muted">
+            Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+          </p>
           <ProfileActions />
-          <ShowEducation profile={profile}/>
-          <ShowExperience profile={profile} />
-          <button style={{marginTop: '100px'}} onClick={this.deleteAccount}>Delete account</button>
+          <ShowExperience experience={profile.experience} />
+          <ShowEducation education={profile.education} />
+          <div style={{ marginBottom: '60px' }} />
+          <button
+            onClick={this.deleteAccount}
+            className="btn btn-danger"
+          >
+            Delete My Account
+          </button>
         </div>
       )
     
@@ -41,16 +49,25 @@ class Dashboard extends Component {
       
       dashboardContent = (
         <div>
-          <h5>You haven't created a profile yet</h5>
-          <Link to="/create-profile">Create profile</Link>
-          <button onClick={this.deleteAccount}>Delete account</button>          
+          <p className="lead text-muted">Welcome {user.name}</p>
+          <p>You have not yet setup a profile, please add some info</p>
+          <Link to="/create-profile" className="btn btn-lg btn-info">
+            Create Profile
+          </Link>
         </div>
       )
     }
 
     return (
-      <div>
-        { dashboardContent }
+      <div className="dashboard">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="display-4">Dashboard</h1>
+              {dashboardContent}
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

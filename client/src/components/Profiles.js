@@ -13,22 +13,27 @@ class Profiles extends Component {
 
     let renderProfiles
 
-    if (profiles === null || loading === true) {
+    if (profiles === null || loading) {
       renderProfiles =  <h5>Loading..</h5>
     } else if (profiles.length > 0) {
-      renderProfiles = (
-        <div>
-          <h1>Profiles</h1>
-          <ProfilesContent profiles={profiles} />
-        </div>
-      )
+      renderProfiles = <ProfilesContent profiles={profiles} />
     } else {
       renderProfiles = <h1>No profiles found</h1>
     }
     
     return (
-      <div>
-        {renderProfiles}
+      <div className="profiles">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="display-4 text-center">Developer Profiles</h1>
+              <p className="lead text-center">
+                Browse and connect with developers
+              </p>
+              {renderProfiles}
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

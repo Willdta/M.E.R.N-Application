@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { registerUser } from "../actions/index";
@@ -46,22 +45,63 @@ class Register extends Component {
     const { errors } = this.props
 
     return (
-      <div>
-        <h1>Register</h1>
-        <Link to="/">Back</Link>
+      <div className="register">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 m-auto">
+              <h1 className="display-4 text-center">Sign Up</h1>
+              <p className="lead text-center">
+                Create your DevConnector account
+              </p>
+              <form onSubmit={this.handleSubmit}>
+               
+                <input
+                  className="form-control form-control-lg"
+                  placeholder="Name"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                  error={errors.name}
+                />
+                { errors ? <h5>{errors.name}</h5> : '' }
 
-        <div>
-          <form action="" onSubmit={this.handleSubmit}>
-            { errors ? <h5>{errors.name}</h5> : '' }
-            <input type="text" placeholder="name" name="name" value={this.state.name} onChange={this.handleChange} />
-            { errors ? <h5>{errors.email}</h5> : null }            
-            <input type="text" placeholder="email" name="email" value={this.state.email} onChange={this.handleChange} />
-            { errors ? <h5>{errors.password}</h5> : null }                        
-            <input type="text" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange} />
-            { errors ? <h5>{errors.password2}</h5> : null }                        
-            <input type="text" placeholder="confirm password" name="password2" value={this.state.password2} onChange={this.handleChange} />
-            <button type="submit">Submit</button>
-          </form>
+                <input
+                  className="form-control form-control-lg mt-4"
+                  placeholder="Email"
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  error={errors.email}
+                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                />
+                { errors ? <h5>{errors.email}</h5> : '' }
+
+                <input
+                  className="form-control form-control-lg mt-4"
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  error={errors.password}
+                />
+                { errors ? <h5>{errors.password}</h5> : '' }
+
+                <input
+                  className="form-control form-control-lg mt-4"
+                  placeholder="Confirm Password"
+                  name="password2"
+                  type="password"
+                  value={this.state.password2}
+                  onChange={this.handleChange}
+                  error={errors.password2}
+                />
+                { errors ? <h5>{errors.password2}</h5> : '' }                
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     )
