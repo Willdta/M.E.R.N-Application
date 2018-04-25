@@ -20,6 +20,7 @@ import AddEducation from './components/AddEducation'
 import AddExperience from './components/AddExperience'
 import Profiles from './components/Profiles'
 import Profile from './components/Profile'
+import NullProfile from './components/NullProfile'
 
 import './App.css'
 
@@ -78,6 +79,7 @@ class App extends Component {
             </Switch>
             <Route path="/profiles" component={ Profiles } />
             <Route path="/profile/:handle" component={ Profile } />
+            <Route path="/not-found" component={ NullProfile } />
           </div>
         </Router>
       </Provider>
