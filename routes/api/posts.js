@@ -73,7 +73,7 @@ router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), 
           const likeCheck = post.likes.filter(like => like.user.toString() === req.user.id).length > 0
           
           if (likeCheck) {
-            return res.json({ message: 'You can\'t like your post more than once' })
+            return res.status(400).json({ message: 'You can\'t like your post more than once' })
           }
           
           post.likes.unshift({ user: req.user.id })
@@ -81,7 +81,6 @@ router.post('/like/:post_id', passport.authenticate('jwt', { session: false }), 
         })
         .catch(err => res.json({ err }))    
     })
-    .catch(err => res.json(err))
 })
 
 // Unlike post
@@ -97,7 +96,7 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
           const likeCheck = post.likes.filter(like => like.user.toString() === req.user.id).length === 0
           
           if (likeCheck) {
-            return res.json({ message: 'You haven\'t liked this post yet' })
+            return res.status(400).json({ message: 'You haven\'t liked this post yet' })
           }
 
           if (!req.user.id) {
@@ -107,8 +106,8 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
           post.likes.splice(req.user.id, 1)
           post.save().then(post => res.json(post))
         })  
+        .catch(err => res.json(err))
     })
-    .catch(err => res.json(err))
 })
 
 // Add comment

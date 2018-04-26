@@ -35,16 +35,16 @@ class PostForm extends Component {
     const { errors } = this.props
 
     return (
-      <div class="post-form mb-3">
-        <div class="card card-info">
-          <div class="card-header bg-info text-white">
+      <div className="post-form mb-3">
+        <div className="card card-info">
+          <div className="card-header bg-info text-white">
             Say Something...
           </div>
-          <div class="card-body">
+          <div className="card-body">
             <form onSubmit={this.addPost}>
-              <div class="form-group">
+              <div className="form-group">
                 <textarea 
-                  class="form-control form-control-lg" 
+                  className="form-control form-control-lg" 
                   placeholder="Create a post" 
                   value={this.state.text}
                   onChange={this.handleChange}
@@ -52,7 +52,7 @@ class PostForm extends Component {
                 />
                 {errors ? errors.text : null}
               </div>
-              <button type="submit" class="btn btn-dark">Submit</button>
+              <button type="submit" className="btn btn-dark">Submit</button>
             </form>
           </div>
         </div>
