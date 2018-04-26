@@ -12,7 +12,7 @@ module.exports = function validatePost(data) {
   }
 
   if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
-    errors.text = 'Your mesage must be between 10 and 300 character'
+    errors.text = 'Your mesage must be between 10 and 300 characters'
   }
 
   return {

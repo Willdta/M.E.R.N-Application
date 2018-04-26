@@ -1,4 +1,4 @@
-import { GET_POSTS, GET_POST } from './types'
+import { GET_ERRORS, GET_POSTS, GET_POST, ADD_POST } from './types'
 import axios from 'axios'
 
 export const fetchPosts = () => dispatch => {
@@ -17,6 +17,22 @@ export const getPost = id => dispatch => {
       dispatch({
         type: GET_POST,
         payload: res.data
+      })
+    })
+}
+
+export const addPost = (post) => dispatch => {
+  axios.post('/api/posts', post)
+    .then(res => {
+      dispatch({
+        type: ADD_POST,
+        payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     })
 }
