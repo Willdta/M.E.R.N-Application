@@ -21,6 +21,8 @@ import AddExperience from './components/AddExperience'
 import Profiles from './components/Profiles'
 import Profile from './components/Profile'
 import NullProfile from './components/NullProfile'
+import PostFeed from './components/PostFeed'
+import Post from './components/Post'
 
 import './App.css'
 
@@ -76,6 +78,12 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute path="/add-experience" component={ AddExperience } />
+            </Switch>
+            <Switch>
+              <PrivateRoute path="/post-feed" component={ PostFeed } />
+            </Switch>
+            <Switch>
+              <PrivateRoute path="/post/:id" component={ Post } />
             </Switch>
             <Route path="/profiles" component={ Profiles } />
             <Route path="/profile/:handle" component={ Profile } />
