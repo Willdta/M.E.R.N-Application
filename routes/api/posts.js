@@ -112,6 +112,12 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
 
 // Add comment
 router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validatePost(req.body)
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  
   Profile
     .findOne({ user: req.user.id })
     .then(() => {
@@ -133,27 +139,21 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
 
 // Delete comment
 router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Profile
-    
-    // Find a user
-    .findOne({ user: req.user.id })
+  Profile.findOne({ id: req.user.id})
     .then(() => {
-      
-      // Find the post with that id
       Post
-       .findOne({_id: req.params.id })
+        .findById(req.params.id)
         .then(post => {
-          const currentUser = post.comments.filter(comment => comment.id === req.params.comment_id)
-          
-          // User can only delete their own comments
-          if (currentUser[0].user.toString() === req.user.id) {
-            post.comments.remove({ _id: req.params.comment_id })
-            post.save()  
-            .then(() => res.json({ msg: 'success' }))
-          } else {
-            res.json({ message: 'You cannot delete someone elses comment' })
+          const commentCheck = post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0
+    
+          if (commentCheck) {
+            return res.status(404).json({ notFound: 'Comment not found' })
           }
-        })    
+    
+          post.comments.remove({ _id: req.params.comment_id})
+          post.save()
+            .then(comment => res.json(comment))
+        })
     })
     .catch(err => res.json(err))
 })

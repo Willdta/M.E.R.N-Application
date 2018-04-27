@@ -2,32 +2,29 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getPost } from '../actions/postActions'
-import PostContent from './PostContent'
 import CommentForm from './CommentForm'
-import { getCurrentProfile } from '../actions/profileActions'
+import CommentFeed from './CommentFeed'
 
 class Post extends Component {
   componentDidMount = () => {
     const id = this.props.match.params.id
 
-    if (id) {
+    // if (id) {
       this.props.getPost(id)
-    }
-
-    // this.props.getCurrentProfile()
+    // }
   }
   
   render() {
     const { post, loading } = this.props.post
-    console.log(post)
-    
-    // const { profile } = this.props
+    // console.log(post.comments)    
 
     let postContent
 
-    if (post === null || loading) {
+    if (post === null || loading || Object.keys(post).length === 0) {
       postContent = <h1>Loading...</h1>
-    } 
+    }  else {
+      postContent = <CommentFeed id={post._id} comments={post.comments} /> 
+    }
 
     return (
       <div className="post">
@@ -51,6 +48,7 @@ class Post extends Component {
                 </div>
               </div>
               <CommentForm id={post._id} />
+              {postContent}
             </div>
           </div>
         </div>
