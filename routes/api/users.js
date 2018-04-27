@@ -78,7 +78,7 @@ router.post('/login', (req, res) => {
       
       // Check for user
       if (!user) {
-        res.status(404).send({ email: 'Invalid email' })
+        res.status(404).json({ email: 'Invalid email' })
       }
 
       // Check password
