@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_ERRORS, GET_POSTS, GET_POST, ADD_POST, DELETE_POST, POST_LOADING } from './types'
+import { GET_ERRORS, CLEAR_ERRORS, GET_POSTS, GET_POST, ADD_POST, DELETE_POST, POST_LOADING } from './types'
 
 export const fetchPosts = () => dispatch => {
   dispatch(postLoading())
@@ -38,6 +38,8 @@ export const getPost = id => dispatch => {
 }
 
 export const addPost = (post) => dispatch => {
+  dispatch(clearErrors())
+
   axios.post('/api/posts', post)
     .then(res => {
       dispatch({
@@ -90,6 +92,8 @@ export const unlikePost = id => dispatch => {
 }
 
 export const addComment = (id, comment) => dispatch => {
+  dispatch(clearErrors())
+
   axios.post(`/api/posts/comment/${id}`, comment)
     .then(res => {
       dispatch({
@@ -113,7 +117,6 @@ export const deleteComment = (postId, commentId, history) => dispatch => {
         payload: res.data
       })
     })
-    // .then(() => window.location.reload())
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -125,5 +128,11 @@ export const deleteComment = (postId, commentId, history) => dispatch => {
 export const postLoading = () => {
   return {
     type: POST_LOADING
+  }
+}
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
   }
 }

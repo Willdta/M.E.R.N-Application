@@ -30,7 +30,10 @@ class CommentForm extends Component {
     }
 
     this.props.addComment(id, newComment)
-    this.setState({ text: '' })
+
+    if (this.state.text.length > 10) {
+      this.setState({ text: '' })
+    }
   }
 
   render() {
@@ -52,7 +55,7 @@ class CommentForm extends Component {
                   onChange={this.handleChange}
                   name="text"
                 />
-                {/* {errors ? errors.text : null} */}
+                {errors ? errors.text : null}
               </div>
               <button type="submit" className="btn btn-dark">Submit</button>
             </form>
