@@ -3,6 +3,7 @@ import { GET_ERRORS, GET_POSTS, GET_POST, ADD_POST, DELETE_POST, POST_LOADING } 
 
 export const fetchPosts = () => dispatch => {
   dispatch(postLoading())
+  
   axios.get('/api/posts')
     .then(res => {
       dispatch({
@@ -19,11 +20,19 @@ export const fetchPosts = () => dispatch => {
 }
 
 export const getPost = id => dispatch => {
+  dispatch(postLoading())
+  
   axios.get(`/api/posts/${id}`)
     .then(res => {
       dispatch({
         type: GET_POST,
         payload: res.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_POST,
+        payload: null
       })
     })
 }
@@ -71,6 +80,22 @@ export const unlikePost = id => dispatch => {
   axios.post(`/api/posts/unlike/${id}`)
     .then(res => {
       dispatch(fetchPosts())
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    })
+}
+
+export const addComment = (id, comment) => dispatch => {
+  axios.post(`/api/posts/comment/${id}`, comment)
+    .then(res => {
+      dispatch({
+        type: GET_POST,
+        payload: res.data
+      })
     })
     .catch(err => {
       dispatch({

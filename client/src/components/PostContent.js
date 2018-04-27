@@ -17,7 +17,7 @@ class PostContent extends Component {
   }
 
   render() {
-    const { posts, auth, errors } = this.props
+    const { posts, auth } = this.props
     
     return (
       posts.map(post => (
@@ -33,7 +33,6 @@ class PostContent extends Component {
               </div>
               <div className="col-md-10">
                 <p className="lead">{post.text}</p>
-                {/* {errors ? errors.message : null} */}
                 <button 
                   onClick={() => this.likePost(post._id)} 
                   type="button" 
@@ -63,8 +62,8 @@ class PostContent extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, errors }) => {
-  return { auth, errors }
+const mapStateToProps = ({ auth }) => {
+  return { auth }
 }
 
 export default connect(mapStateToProps, { deletePost, likePost, unlikePost })(PostContent)
