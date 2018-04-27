@@ -1,5 +1,5 @@
 import React from 'react'
-import isEmpty from '../validation/is-empty'
+import isEmpty from '../../validation/is-empty'
 
 export default ({ profile }) => {
   // Get first name

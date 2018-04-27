@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { withRouter } from 'react-router-dom'
-import formOptions from '../common/formOptions'
+import formOptions from '../../common/formOptions'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { createProfile } from '../actions/profileActions'
+import { createProfile } from '../../actions/profileActions'
 
 class CreateProfile extends Component {
   constructor(props) {

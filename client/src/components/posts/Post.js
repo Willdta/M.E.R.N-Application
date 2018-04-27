@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getPost } from '../actions/postActions'
+import { getPost } from '../../actions/postActions'
 import CommentForm from './CommentForm'
 import CommentFeed from './CommentFeed'
 

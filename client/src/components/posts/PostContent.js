@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { deletePost, likePost, unlikePost } from '../actions/postActions'
+import { deletePost, likePost, unlikePost } from '../../actions/postActions'
 import { connect } from 'react-redux'
 
 class PostContent extends Component {

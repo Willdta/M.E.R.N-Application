@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getProfiles } from '../actions/profileActions' 
+import { getProfiles } from '../../actions/profileActions' 
 import ProfilesContent from './ProfilesContent'
 
 class Profiles extends Component {

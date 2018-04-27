@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Moment from 'react-moment'
-import { deleteExperience } from '../actions/profileActions'
+import { deleteExperience } from '../../actions/profileActions'
 
 class ShowExperience extends Component {
   deleteExperience = id => {

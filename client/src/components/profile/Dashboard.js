@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCurrentProfile, deleteProfile } from '../actions/profileActions'
+import { getCurrentProfile, deleteProfile } from '../../actions/profileActions'
 import ProfileActions from './ProfileActions'
 import ShowEducation from './ShowEducation'
 import ShowExperience from './ShowExperience'

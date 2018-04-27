@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { logoutUser } from '../actions/index'
-import { clearCurrentProfile } from '../actions/profileActions'
+import { logoutUser } from '../../actions/index'
+import { clearCurrentProfile } from '../../actions/profileActions'
 import { Link } from 'react-router-dom'
 
 class Navbar extends Component {

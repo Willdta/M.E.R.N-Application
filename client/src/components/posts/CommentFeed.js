@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deleteComment } from '../actions/postActions'
+import { deleteComment } from '../../actions/postActions'
 import { withRouter } from 'react-router-dom'
 
 class CommentFeed extends Component {

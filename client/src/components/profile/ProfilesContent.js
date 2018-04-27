@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import isEmpty from '../validation/is-empty'
+import isEmpty from '../../validation/is-empty'
 
 export default ({ profiles }) => {
   return (

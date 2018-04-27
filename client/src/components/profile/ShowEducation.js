@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Moment from 'react-moment'
-import { deleteEducation } from '../actions/profileActions'
+import { deleteEducation } from '../../actions/profileActions'
 
 class ShowEducation extends Component {
   deleteEducation = id => {

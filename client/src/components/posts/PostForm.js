@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addComment } from '../actions/postActions'
+import { addPost } from '../../actions/postActions'
 
-class CommentForm extends Component {
+class PostForm extends Component {
   constructor(props) {
     super(props)
-
+    
     this.state = {
       text: ''
     }
@@ -17,20 +17,19 @@ class CommentForm extends Component {
     })
   }
 
-  addComment = e => {
+  addPost = e => {
     e.preventDefault()
 
     const { user } = this.props.auth
-    const { id } = this.props
 
-    const newComment = {
+    const newPost = {
       name: user.name,
       text: this.state.text,
       avatar: user.avatar
     }
 
-    this.props.addComment(id, newComment)
-    this.setState({ text: '' })
+    this.props.addPost(newPost)
+    this.setState({ text: '' })    
   }
 
   render() {
@@ -40,19 +39,19 @@ class CommentForm extends Component {
       <div className="post-form mb-3">
         <div className="card card-info">
           <div className="card-header bg-info text-white">
-            Add a comment
+            Say Something...
           </div>
           <div className="card-body">
-            <form onSubmit={this.addComment}>
+            <form onSubmit={this.addPost}>
               <div className="form-group">
-                <textarea
-                  className="form-control form-control-lg"
-                  placeholder="Reply"
+                <textarea 
+                  className="form-control form-control-lg" 
+                  placeholder="Create a post" 
                   value={this.state.text}
                   onChange={this.handleChange}
-                  name="text"
+                  name="text"  
                 />
-                {/* {errors ? errors.text : null} */}
+                {errors ? errors.text : null}
               </div>
               <button type="submit" className="btn btn-dark">Submit</button>
             </form>
@@ -63,8 +62,8 @@ class CommentForm extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, errors }) => {
-  return { auth, errors }
+const mapStateToProps = ({ auth, post, errors }) => {
+  return { auth, post, errors }
 }
 
-export default connect(mapStateToProps, { addComment })(CommentForm)
+export default connect(mapStateToProps, { addPost })(PostForm)

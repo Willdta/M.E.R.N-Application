@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { withRouter } from 'react-router-dom'
-import formOptions from '../common/formOptions'
-import isEmpty from '../validation/is-empty'
+import formOptions from '../../common/formOptions'
+import isEmpty from '../../validation/is-empty'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { createProfile, getCurrentProfile } from '../actions/profileActions'
+import { createProfile, getCurrentProfile } from '../../actions/profileActions'
 
 
 class EditProfile extends Component {
