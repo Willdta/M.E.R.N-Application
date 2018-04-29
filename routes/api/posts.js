@@ -99,10 +99,6 @@ router.post('/unlike/:post_id', passport.authenticate('jwt', { session: false })
             return res.status(400).json({ message: 'You haven\'t liked this post yet' })
           }
 
-          if (!req.user.id) {
-            console.log('nahhhh ')
-          }
-
           post.likes.splice(req.user.id, 1)
           post.save().then(post => res.json(post))
         })  
