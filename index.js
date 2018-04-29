@@ -29,10 +29,6 @@ mongoose
   .then(() => console.log('Connected to Mongo'))
   .catch(err => console.log(err))
 
-app.get('/', (req, res) => {
-  res.send('hello')
-})
-
 // Our Routes
 app.use('/api/users', users)
 app.use('/api/profile', profile)
