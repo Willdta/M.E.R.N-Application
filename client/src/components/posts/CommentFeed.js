@@ -6,14 +6,10 @@ import { withRouter } from 'react-router-dom'
 class CommentFeed extends Component {
   deleteComment = commentId => {
     const { id } = this.props
-    
+
     this.props.deleteComment(id, commentId, this.props.history)
   }
 
-  componentDidUpdate() {
-    console.log(this.props.comments);
-  }
-  
   render() {
     const { auth, comments } = this.props
 
